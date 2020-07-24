@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNekrasovDB", "DNekrasovDB\DNekrasovDB.csproj", "{A243CA38-6285-4569-8A1A-182C01FD12DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A243CA38-6285-4569-8A1A-182C01FD12DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A243CA38-6285-4569-8A1A-182C01FD12DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A243CA38-6285-4569-8A1A-182C01FD12DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A243CA38-6285-4569-8A1A-182C01FD12DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {07C08C1F-298A-4F9E-BF78-2FCB03C5D251}
+	EndGlobalSection
+EndGlobal
