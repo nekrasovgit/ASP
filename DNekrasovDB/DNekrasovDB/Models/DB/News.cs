@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DNekrasovDB.Models.DB
 {
-    public class News
+    public class News : IEntity
     {
         public Guid Id { get; set; }
 
