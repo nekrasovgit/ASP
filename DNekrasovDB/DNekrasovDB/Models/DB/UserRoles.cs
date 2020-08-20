@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DNekrasovDB.Models.DB
 {
-    public class UserRoles
+    public class UserRoles : IEntity
     {
         public Guid Id { get; set; }
 
