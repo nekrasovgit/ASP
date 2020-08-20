@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DNekrasovDB.Models.DB
 {
-    public class Comments
+    public class Comments : IEntity
     {
         public Guid Id { get; set; }
 
