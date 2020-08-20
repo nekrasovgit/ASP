@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DNekrasovDB.Models;
+using Microsoft.EntityFrameworkCore;
+using DNekrasovDB.Models.DB;
+using DNekrasovDB.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DNekrasovDB.Controllers
 {
@@ -13,16 +17,22 @@ namespace DNekrasovDB.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly DBInitializer _dbInitializer;
+
+        public HomeController(ILogger<HomeController> logger, DBInitializer dbInitializer)
         {
             _logger = logger;
+            _dbInitializer = dbInitializer;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            _logger.LogInformation("bla bla bla");
+            await _dbInitializer.Initialize();
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Privacy()
         {
             return View();
