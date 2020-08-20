@@ -1,20 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DNekrasovDB.Data.Repository;
+using DNekrasovDB.Data.UnitOfWork;
+using DNekrasovDB.Helpers;
 using DNekrasovDB.Models.DB;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using DNekrasovDB.Data.NewsParser;
+using DNekrasovDB.Data.RssReader;
+
+
 
 namespace DNekrasovDB
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,7 +32,21 @@ namespace DNekrasovDB
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<GoodNewsContext>(options => options.UseSqlServer(connection));
+            services.AddScoped<GoodNewsContext>();
+            services.AddScoped<DBInitializer>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IRepository<News>, NewsRepository>();
+            services.AddScoped<IRepository<Magazine>, MagazineRepository>();
+            //services.AddScoped<IRssReader, RssReader>();
+            //services.AddTransient<INewsParser, NewsParser>();
             
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = new PathString("/Account/Login");
+            });
 
 
             services.AddControllersWithViews();
@@ -51,6 +70,7 @@ namespace DNekrasovDB
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -59,6 +79,8 @@ namespace DNekrasovDB
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            
         }
     }
 }
