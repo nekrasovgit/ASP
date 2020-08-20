@@ -1,0 +1,29 @@
+﻿@model IEnumerable<System.ServiceModel.Syndication.SyndicationItem>
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+
+@foreach(var item in Model)
+{
+<div>
+    <h3>@item.Title.Text</h3>
+    <div>
+        @Html.Raw(item.Summary.Text)
+    </div>
+    <div>
+        <span>
+            @item.PublishDate
+        </span>
+    </div>
+    <div>
+        <span>
+            @item.SourceFeed.Title.Text
+        </span>
+    </div>
+    <div>
+        <a href="@item.Links.FirstOrDefault()?.Uri">link</a>
+    </div>
+</div>
+}
