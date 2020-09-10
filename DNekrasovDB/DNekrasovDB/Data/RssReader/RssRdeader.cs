@@ -11,7 +11,7 @@ namespace DNekrasovDB.Data.RssReader
     {
         private readonly ILogger _logger;
 
-        public RssReader(ILogger logger)
+        public RssReader(ILogger<RssReader> logger)
         {
             _logger = logger;
         }
@@ -43,6 +43,7 @@ namespace DNekrasovDB.Data.RssReader
             }
         }
     }
+
 
 
 }
