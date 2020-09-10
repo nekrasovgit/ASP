@@ -13,16 +13,18 @@ namespace DNekrasovDB.Data.Repository
     {
         Task<T> GetByIdAsync(Guid id, CancellationToken token);
 
-        IQueryable<T> FindBy(Expression<Func<T, bool>> searchPredicate,
+        Task<IEnumerable<T>> GetAllAsync();
+
+        Task AddRangeasync(IEnumerable<T> obj);
+
+        /*IQueryable<T> FindBy(Expression<Func<T, bool>> searchPredicate,
             params Expression<Func<T, object>>[] includesPredicate);
 
         Task AddAsync(T objects);
 
-        Task AddRangeasync(IEnumerable<T> obj);
-
         void UpDate(T objects);
 
-        Task Delete(Guid id);
+        Task Delete(Guid id);*/
 
     }
 }
