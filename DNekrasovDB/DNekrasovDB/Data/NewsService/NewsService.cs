@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DNekrasovDB.Data.NewsService
 {
-    public class NewsService
+    public class NewsService : INewsService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRssReader _rssReader;
@@ -31,10 +31,11 @@ namespace DNekrasovDB.Data.NewsService
             {
                 var rssData = GetDataFromRss();
 
-                foreach (var syndicationItem in rssData)
-                {
-                    _newsParser.Parse(syndicationItem.Links.FirstOrDefault()?.Uri.AbsoluteUri);
-                }
+                var newsList = rssData.Select(syndicationItem=> 
+                    _newsParser.Parse(syndicationItem.Links.FirstOrDefault()?.Uri.AbsoluteUri)).ToList();
+                
+
+               
             }
             catch (Exception e)
             {
