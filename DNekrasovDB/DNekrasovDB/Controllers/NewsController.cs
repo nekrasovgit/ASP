@@ -5,9 +5,9 @@ using System.ServiceModel.Syndication;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using DNekrasovDB.Data.NewsService;
-
-
-
+using DNekrasovDB.Data.UnitOfWork;
+using DNekrasovDB.Models.DB;
+using System.Collections.Generic;
 
 namespace DNekrasovDB.Controllers
 {
@@ -16,8 +16,9 @@ namespace DNekrasovDB.Controllers
         
         private readonly INewsService _newsService;
         private readonly ILogger<NewsController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        //private readonly GoodNewsContext _goodNewsContext;
+        
 
         public NewsController(ILogger<NewsController> logger, INewsService newsService)
         {
@@ -46,13 +47,15 @@ namespace DNekrasovDB.Controllers
         {
             try
             {
+
+                _unitOfWork.NewsRepository.GetAllAsync();
+
                 var mynews = new ConcurrentBag<SyndicationItem>();
 
                 _newsService.GetDataFromRssInsertIntoDB();
 
-                
+                _unitOfWork.SaveChangesAsync();
 
-                //это оставляем
                 return View(mynews.OrderByDescending(item => item.PublishDate));
             }
             catch (Exception e)
