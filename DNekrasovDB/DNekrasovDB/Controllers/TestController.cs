@@ -22,10 +22,10 @@ namespace DNekrasovDB.Controllers
         public async Task<IActionResult> Index()
         {
             
-            await _unitofwork.MagazineRepository
+            /*await _unitofwork.MagazineRepository
                 .AddAsync(new Magazine() { Id = Guid.NewGuid(), Name = "Onliner", RssUrl = @"onliner.by"});
             await _unitofwork.SaveChangesAsync();
-
+            */
             return View();
         }
     }
