@@ -1,11 +1,13 @@
-﻿using System;
+﻿using DNekrasovDB.Models.DB;
+using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DNekrasovDB.Data.NewsParser
 {
     public interface INewsParser
-    { 
-        void Parse(string rssurl);
+    {
+        public IEnumerable<News> Parse(string rssurl);
     }
 }
