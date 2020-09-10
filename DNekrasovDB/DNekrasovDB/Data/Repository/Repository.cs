@@ -12,7 +12,7 @@ namespace DNekrasovDB.Data.Repository
     public abstract class Repository<T> : IRepository<T> where T : class, IEntity
     {
         private readonly GoodNewsContext _goodNewsContext;
-        private readonly DbSet<T> _dbset;
+        protected readonly DbSet<T> _dbset;
 
         public Repository(GoodNewsContext goodNewsContext)
         {
@@ -20,13 +20,25 @@ namespace DNekrasovDB.Data.Repository
             _dbset = _goodNewsContext.Set<T>();
         }
 
-        public async Task<T> GetByIdAsync(Guid id, CancellationToken token)
+        public virtual async Task<T> GetByIdAsync(Guid id, CancellationToken token)
         {
             return await _dbset.FirstOrDefaultAsync(news => news.Id.Equals(id), token);
         }
 
-        public IQueryable<T> FindBy(Expression<Func<T, bool>> searchPredicate,
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await _dbset.ToListAsync();
+        }
+
+        public virtual async Task AddRangeasync(IEnumerable<T> obj)
+        {
+            await _dbset.AddRangeAsync(obj);
+        }
+
+
+        /*public virtual IQueryable<T> FindBy(Expression<Func<T, bool>> searchPredicate,
             params Expression<Func<T, object>>[] includesPredicate)
+
         {
             var result = _dbset.Where(searchPredicate);
             if (includesPredicate.Any())
@@ -36,27 +48,24 @@ namespace DNekrasovDB.Data.Repository
             }
 
             return result;
-        }
+        }*/
 
-        public async Task AddAsync(T objects)
+        /*public async Task AddAsync(T objects)
         {
             var result = await _dbset.AddAsync(objects);
-        }
+        }*/
 
-        public async Task AddRangeasync(IEnumerable<T> obj)
-        {
-            await _dbset.AddRangeAsync(obj);
-        }
+        
 
-        public void UpDate(T objects)
+        /*public void UpDate(T objects)
         {
             var result = _dbset.Update(objects);
-        }
+        }*/
 
-        public async Task Delete(Guid id)
+        /*public async Task Delete(Guid id)
         {
              _dbset.Remove(await _dbset.FirstOrDefaultAsync(entity => entity.Id.Equals(id)));
-        }
+        }*/
 
         
     }
