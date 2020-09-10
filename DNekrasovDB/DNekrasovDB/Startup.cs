@@ -12,8 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DNekrasovDB.Data.NewsParser;
 using DNekrasovDB.Data.RssReader;
-
-
+using DNekrasovDB.Data.NewsService;
 
 namespace DNekrasovDB
 {
@@ -38,9 +37,14 @@ namespace DNekrasovDB
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IRepository<News>, NewsRepository>();
             services.AddScoped<IRepository<Magazine>, MagazineRepository>();
-            //services.AddScoped<IRssReader, RssReader>();
-            //services.AddTransient<INewsParser, NewsParser>();
+            services.AddScoped<IRssReader, RssReader>();
+            services.AddTransient<INewsParser, TutByParser>();
+            services.AddTransient<INewsParser, S13Parser>();
+            services.AddTransient<INewsParser, OnlinerParser>();
+            services.AddTransient<INewsService, NewsService>();
             
+
+
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
