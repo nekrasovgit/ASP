@@ -1,0 +1,21 @@
+﻿@model IEnumerable<DNekrasovDB.Models.DB.News>
+@{
+    ViewData["Title"] = "List";
+}
+
+<a asp-action="RefreshNews" asp-controller="News" class="refresh-news-btn">
+    Get new data from db
+</a>
+<h1>List</h1>
+
+@foreach(var item in Model)
+{
+<div>
+    @* TODO Add view for news *@
+    @item.Name
+</div>
+<div>
+    @item.Body
+</div>
+}
+

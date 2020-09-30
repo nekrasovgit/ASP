@@ -1,0 +1,31 @@
+﻿@model DNekrasovDB.ModelView.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<a asp-action="Login" asp-controller="Account">Reg</a>
+
+<form asp-action="Login" asp-controller="Account" asp-antiforgery="true" method="post">
+    <div class="validation" asp-validation-summary="ModelOnly" />
+    <div>
+        <div class="form-group">
+            <label asp-for="Email">Enter Email:</label>
+            <input asp-for="Email" type="email" />
+            <span asp-validation-for="Email" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Password">Enter Password:</label>
+            <input asp-for="Password" type="password" />
+            <span asp-validation-for="Password" />
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Login" class="btn btn-outline-dark" />
+        </div>
+    </div>
+
+</form>
+
