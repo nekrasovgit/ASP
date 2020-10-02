@@ -38,9 +38,9 @@ namespace DNekrasovDB
             services.AddScoped<IRepository<News>, NewsRepository>();
             services.AddScoped<IRepository<Magazine>, MagazineRepository>();
             services.AddScoped<IRssReader, RssReader>();
-            services.AddTransient<INewsParser, TutByParser>();
-            services.AddTransient<INewsParser, S13Parser>();
-            services.AddTransient<INewsParser, OnlinerParser>();
+            services.AddTransient<ITutByParser, TutByParser>();
+            services.AddTransient<IS13Parser, S13Parser>();
+            services.AddTransient<IOnlinerParser, OnlinerParser>();
             services.AddTransient<INewsService, NewsService>();
             
 

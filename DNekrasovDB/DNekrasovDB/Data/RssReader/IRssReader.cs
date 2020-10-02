@@ -7,5 +7,6 @@ namespace DNekrasovDB.Data.RssReader
     {
         public IEnumerable<SyndicationItem> GetNewsFromFeed(string feedurl);
         // GetNewsFromFeed - rename to GetNewsDataFromFeed
+        
     }
 }

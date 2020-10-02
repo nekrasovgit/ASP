@@ -8,6 +8,6 @@ namespace DNekrasovDB.Data.NewsParser
 {
     public interface INewsParser
     {
-        public IEnumerable<News> Parse(string rssurl);
+        public News Parse(string rssurl);
     }
 }

@@ -8,6 +8,7 @@ using DNekrasovDB.Data.NewsService;
 using DNekrasovDB.Data.UnitOfWork;
 using DNekrasovDB.Models.DB;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DNekrasovDB.Controllers
 {
@@ -20,12 +21,12 @@ namespace DNekrasovDB.Controllers
 
         
 
-        public NewsController(ILogger<NewsController> logger, INewsService newsService)
+        public NewsController(ILogger<NewsController> logger, INewsService newsService, IUnitOfWork unitOfWork)
         {
   
             _newsService = newsService;
             _logger = logger;
-            _newsService = newsService;
+            _unitOfWork = unitOfWork;
 
         }
 
@@ -42,21 +43,22 @@ namespace DNekrasovDB.Controllers
 
             return View(newsModel);
         }*/
+        //todo make it post & use ajax
+        public IActionResult RefreshNews()
+        {
+            //_newsService.Insert....
+            _newsService.InsertNewsFromRssToDb();
+            return RedirectToAction("List");
+        }
 
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
             try
             {
 
-                _unitOfWork.NewsRepository.GetAllAsync();
+                var data = await _unitOfWork.NewsRepository.GetAllAsync();
 
-                var mynews = new ConcurrentBag<SyndicationItem>();
-
-                _newsService.GetDataFromRssInsertIntoDB();
-
-                _unitOfWork.SaveChangesAsync();
-
-                return View(mynews.OrderByDescending(item => item.PublishDate));
+                return View(data);
             }
             catch (Exception e)
             {

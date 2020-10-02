@@ -7,33 +7,49 @@ using System.Threading.Tasks;
 
 namespace DNekrasovDB.Data.NewsParser
 {
-    public class OnlinerParser : INewsParser
+    public class OnlinerParser : IOnlinerParser
     {
-        public IEnumerable<News> Parse(string rssurl)
+        
+
+        public News Parse(string url)
         {
-            var url = "https://www.onliner.by";
+            
+
             var web = new HtmlWeb();
             var doc = web.Load(url);
-
             var docNode = doc.DocumentNode;
 
-            var news = new List<News>();
-
-            var title = doc.DocumentNode.Descendants("div").
-               FirstOrDefault(x => x?.Attributes["class"]?.Value == "news-header__title").Descendants("h1").ToString();
-
-
-            var body = doc.DocumentNode.Descendants("div").
-               Where(x => x?.Attributes["class"]?.Value == "news-text").ToString();
+            var list = doc.DocumentNode.Descendants("div").
+               Where(x => x.Attributes["class"]?.Value == "news - grid__flex").ToList();
             
-            news.Add(new News()
+            
+            var body = list.FirstOrDefault()?.InnerHtml;
+
+            //return body;
+
+
+            /*var body = docNode.Descendants()
+               .Where(d => d.Name == "div")
+               .Where(d => d.Attributes.FirstOrDefault().Name == "class")
+               .Where(d => d.Attributes.FirstOrDefault().Value == "news-text")
+               .FirstOrDefault()?
+               .InnerHtml;*/
+
+            /*var list = doc.DocumentNode.Descendants("div").
+               Where(x => x.Attributes["class"]?.Value == "news-text").ToList();*/
+
+            //"news-grid__part news-grid__part_1"
+
+            //news - grid__flex
+
+
+            return new News()
             {
-                Name = title,
-                Body = body,
-            });
+                Id = Guid.NewGuid(),
+                Body = body
+            };
 
 
-            return news;
 
             /*< a href = "https://ads.adfox.ru/239538/goLink?ad-session-id=1064061599751361443&amp;puid28=epam%3Ait-belarus%3Aonliner%3Awargaming%3Apvt&amp;puid26=tech&amp;hash=3b5561d561558459&amp;sj=gPiEDtx2yGoBCfto1asb3yumJ7mCh5cq6qvZ66FH8z333qWismQsgtwC5PmVXLBScnBusqieQ9SxmamZdkb98l1vRJxhjHfD_QHgn4Ut5A%3D%3D&amp;rand=fcangr&amp;rqs=Tea907XUhTzARFpfHBIg52KqIEZvsHhr&amp;pr=bmcdavn&amp;p1=cdale&amp;ytt=448257155663893&amp;p5=ijwap&amp;ybv=0.1839&amp;p2=fgou&amp;ylv=0.1840&amp;pf=https%3A%2F%2Fstr.by%2Fall-news%2Fnovyj-uchebnyj-god%3Futm_source%3Donliner.by%26utm_medium%3Dbanner%26utm_campaign%3Daugust24.08" target = "_blank" >< img src = "https://banners.adfox.ru/200821/adfox/1418269/3828879.315a993d94f1f41e17a0214a7449d5f4.png" style = "width: 100%; height: auto; border: 0px; vertical-align: middle; max-width: 300px;" ></ a >*/
             /*< a href = "https://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.onliner.by%2F2020%2F09%2F10%2Fbolshoj-isxod-ajtishnikov-ili-vremennyj-relokejt-chto-teper-budet-s-it-stranoj" target = "_blank" class="button-style button-style_extra button-style_small news-reference__button news-reference__button_fb" title="Поделиться в Facebook"></a>*/

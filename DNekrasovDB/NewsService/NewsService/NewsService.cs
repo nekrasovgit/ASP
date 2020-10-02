@@ -3,13 +3,12 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
-using DNekrasovDB.Data.UnitOfWork;
-using DNekrasovDB.Data.NewsParser;
 using DNekrasovDB.Data.RssReader;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using DNekrasovDB.Models.DB;
-using System.Reflection;
+using DNekrasovDB.NewsService.NewsParser;
+using DNekrasovDB.Models;
+using DNekrasovDB.UnitOfWork.UnitOfWork;
 
 namespace DNekrasovDB.Data.NewsService
 {

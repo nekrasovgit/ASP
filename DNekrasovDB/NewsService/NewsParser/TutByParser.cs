@@ -1,11 +1,10 @@
-﻿using DNekrasovDB.Models.DB;
+﻿using DNekrasovDB.Models;
 using HtmlAgilityPack;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace DNekrasovDB.Data.NewsParser
+
+namespace DNekrasovDB.NewsService.NewsParser
 {
     public class TutByParser : ITutByParser
     {

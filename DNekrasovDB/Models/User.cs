@@ -1,9 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-
-namespace DNekrasovDB.Models.DB
+namespace DNekrasovDB.Models
 {
     public class User : IEntity
     {

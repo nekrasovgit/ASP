@@ -11,8 +11,11 @@ namespace DNekrasovDB.Data.Repository
 {
     public class NewsRepository : Repository<News>
     {
+        private readonly GoodNewsContext _goodNewsContext;
+
         public NewsRepository(GoodNewsContext goodNewsContext) : base(goodNewsContext)
         {
+            _goodNewsContext = goodNewsContext;
         }
 
 
@@ -22,9 +25,10 @@ namespace DNekrasovDB.Data.Repository
             return await _dbset.ToListAsync();
         }
 
-        public override async Task AddRangeasync(IEnumerable<News> obj)
+        public override async Task AddRangeasync(IEnumerable<News> news)
         {
-            await _dbset.AddRangeAsync(obj);
+            await _dbset.AddRangeAsync(news);
+            await _goodNewsContext.SaveChangesAsync();
         }
     }
 }

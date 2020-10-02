@@ -8,41 +8,33 @@ using System.Threading.Tasks;
 
 namespace DNekrasovDB.Data.NewsParser
 {
-    public class S13Parser : INewsParser
+    public class S13Parser : IS13Parser
     {
-        private readonly IUnitOfWork _unitOfWork;
 
-        private const string url_S13 = @"http://s13.ru";
-
-        public S13Parser(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+ 
 
         
 
-        public IEnumerable<News> Parse(string rssurl)
+        public News Parse(string rssurl)
         {
-            
             var web = new HtmlWeb();
-            var doc = web.Load(url_S13);
-
+            var doc = web.Load(rssurl);
             var docNode = doc.DocumentNode;
 
-            var news = new List<News>();
+            var listS13 = doc.DocumentNode.Descendants("div").
+               Where(x => x?.Attributes["class"]?.Value == "content").ToList();
 
-            var title = doc.DocumentNode.Descendants("div").
-               FirstOrDefault(x => x?.Attributes["class"]?.Value == "content").Descendants("h1").ToString();
+            var body = listS13.FirstOrDefault()?.InnerHtml;
 
 
-            var body = doc.DocumentNode.Descendants("div").
-               Where(x => x?.Attributes["class"]?.Value == "content").ToList().ToString();
+            return new News()
+            {
+                Id = Guid.NewGuid(),
+                Body = body
+            };
 
-            
 
-            var x = "<h1> Hello World</h1>";
 
-            x = x.Remove(0, 4);
 
             //string e = "<span title="Просмотров">5666</span>";
             //e = e.Remove(0, 4);
@@ -78,13 +70,7 @@ namespace DNekrasovDB.Data.NewsParser
             //e = e.Remove(0, 33);
 
 
-            news.Add(new News()
-            {
-                Name = title,
-                Body = body,
-            });
-
-            return news;
+            
         }
     }
 }
